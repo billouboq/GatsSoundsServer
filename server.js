@@ -13,19 +13,19 @@ io.on('connection', (socket) => {
     console.log('connected');
 
     socket.on('sendVideo', (id) => {
-        socket.broadcast.emit('video', id);
+        io.emit('video', id);
     });
 
     socket.on('sendPlay', () => {
-        socket.broadcast.emit('play');
+        io.emit('play');
     });
 
     socket.on('sendPause', () => {
-        socket.broadcast.emit('pause');
+        io.emit('pause');
     });
 
     socket.on('sendStop', () => {
-        socket.broadcast.emit('stop');
+        io.emit('stop');
     });
 
 });
