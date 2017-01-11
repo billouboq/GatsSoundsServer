@@ -1,32 +1,33 @@
 'use strict';
 
-const http = require('http');
-const server = http.createServer();
+const express = require('express');
+const bodyParser = require('body-parser')
+
+const app = express();
+const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-const port = 1234;
 
-server.listen(port, () => {
-    console.log('server listen on port ' + port);
+const config = require('./config');
+const socketController = require('./sockets')
+const routeController = require('./routes');
+
+// set middlewares
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
+// use uws instead of ws
+io.engine.ws = new (require('uws').Server)({
+   noServer: true,
+   perMessageDeflate: false
 });
 
-io.on('connection', (socket) => {
-    console.log('connected');
+// routes controller
+routeController(app);
 
-    socket.on('sendVideo', (id) => {
-        io.emit('video', id);
-    });
+// socket controller
+socketController(io);
 
-    socket.on('sendPlay', () => {
-        io.emit('play');
-    });
-
-    socket.on('sendPause', () => {
-        io.emit('pause');
-    });
-
-    socket.on('sendStop', () => {
-        io.emit('stop');
-    });
-
+// start http server
+server.listen(config.server.port, () => {
+   console.log('server listen on port ' + config.server.port);
 });
-
