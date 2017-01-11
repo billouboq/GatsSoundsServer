@@ -1,5 +1,17 @@
 'use strict';
 
 module.exports = {
-  port: 1234
+  server: {
+    port: 1234
+  },
+  redis: {
+
+  },
+  postgre: {
+    user: 'bill',
+    password: 'gatsbill',
+    database: 'gatssounds',
+    host: 'localhost',
+    port: 5432,
+  }
 };
