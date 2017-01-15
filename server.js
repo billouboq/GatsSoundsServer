@@ -1,19 +1,15 @@
 'use strict';
 
 const express = require('express');
-const bodyParser = require('body-parser')
 
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const config = require('./config');
-const socketController = require('./sockets')
+const middlewares = require('./config/middlewares');
+const socketController = require('./sockets');
 const routeController = require('./routes');
-
-// set middlewares
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
 
 // use uws instead of ws
 io.engine.ws = new (require('uws').Server)({
@@ -21,7 +17,10 @@ io.engine.ws = new (require('uws').Server)({
    perMessageDeflate: false
 });
 
-// routes controller
+// set global middlewares
+middlewares.setGlobal(app);
+
+// route controller
 routeController(app);
 
 // socket controller

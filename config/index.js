@@ -1,17 +1,23 @@
 'use strict';
 
-module.exports = {
-  server: {
-    port: 1234
-  },
-  redis: {
+const fs = require('fs');
 
-  },
-  postgre: {
-    user: 'bill',
-    password: 'gatsbill',
-    database: 'gatssounds',
-    host: 'localhost',
-    port: 5432,
-  }
+module.exports = {
+	server: {
+		port: 1234
+	},
+	redis: {
+
+	},
+   jwt: {
+      secret: fs.readFileSync('./certificate/key.pem', 'utf8'),
+      algo: 'RS256',
+   },
+	postgre: {
+		user: 'bill',
+		password: 'gatsbill',
+		database: 'gatssounds',
+		host: 'localhost',
+		port: 5432,
+	}
 };
