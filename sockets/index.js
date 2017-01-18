@@ -7,22 +7,22 @@ module.exports = function (io) {
 	io.on('connection', (socket) => {
 		console.log('connected');
 
-		socket.on('sendVideo', (id) => {
-			io.emit('video', id);
-		});
+      listenTo('test', function(io, socket, data) {
+         console.log(data);
+         console.log('test');
+      });
 
-		socket.on('sendPlay', () => {
-			io.emit('play');
-		});
-
-		socket.on('sendPause', () => {
-			io.emit('pause');
-		});
-
-		socket.on('sendStop', () => {
-			io.emit('stop');
-		});
+      listenTo('an other test', (io, socket, data) => {
+         console.log(data);
+         console.log('an other test');
+      });
 
 	});
+
+   function listenTo(key, callback) {
+      socket.on(key, (data) => {
+         callback(io, socket, data);
+      });
+   }
 
 }
