@@ -7,7 +7,7 @@ const Pool = pg.Pool;
 const db = new Pool(config.postgre);
 
 db.connect((err, client, done) => {
-   if(err) throw err;
+   if (err) throw err;
    done();
 });
 

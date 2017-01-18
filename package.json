@@ -8,12 +8,12 @@
   "author": "GatsBill",
   "dependencies": {
     "bcrypt": "1.0.2",
-    "body-parser": "1.15.2",
+    "body-parser": "1.16.0",
     "express": "4.14.0",
     "express-validator": "3.1.2",
     "jsonwebtoken": "7.2.1",
     "pg": "6.1.2",
-    "redis": "2.6.4",
+    "redis": "2.6.5",
     "socket.io": "1.7.2",
     "uws": "0.12.0"
   }

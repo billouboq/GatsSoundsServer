@@ -1,5 +1,7 @@
 'use strict';
 
+const redis = require('../services/redis');
+
 module.exports = function (io) {
 
 	io.on('connection', (socket) => {

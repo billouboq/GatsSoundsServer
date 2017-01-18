@@ -7,10 +7,11 @@ module.exports = {
 		port: 1234
 	},
 	redis: {
-
+      host: '127.0.0.1',
+      port: '6379'
 	},
    jwt: {
-      secret: fs.readFileSync('./certificate/key.pem', 'utf8'),
+      secret: fs.readFileSync('./certificates/key.pem', 'utf8'),
       algo: 'RS256',
    },
 	postgre: {
