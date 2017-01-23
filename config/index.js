@@ -12,6 +12,7 @@ module.exports = {
 	},
    jwt: {
       secret: fs.readFileSync('./certificates/key.pem', 'utf8'),
+      verifyKey: fs.readFileSync('./certificates/publicKey', 'utf8'),
       algo: 'RS256',
    },
 	postgre: {

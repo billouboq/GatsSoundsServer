@@ -5,15 +5,17 @@ const db = require('../services/database');
 const encodeJWT = require('../services/jwt').encode;
 
 const schema = {
-	username: { in: 'body',
+	username: {
+      in: 'body',
 		notEmpty: true,
 		errorMessage: 'Invalid username'
 	},
-	password: { in: 'body',
+	password: {
+      in: 'body',
 		notEmpty: true,
 		isLength: {
 			options: [{
-				min: 8,
+				min: 6,
 				max: undefined
 			}],
 		},

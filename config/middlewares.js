@@ -4,6 +4,7 @@ const util = require('util');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const cors = require('cors');
+const morgan = require('morgan');
 
 module.exports = {
 	setGlobal,
@@ -15,6 +16,10 @@ function setGlobal(app) {
 	app.use(bodyParser.urlencoded({extended: false}));
 	app.use(bodyParser.json());
 	app.use(expressValidator());
+
+   if (process.env.NODE_ENV !== 'production') {
+      app.use(morgan('dev'));
+   }
 }
 
 function schemaValidator(schema) {
