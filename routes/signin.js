@@ -26,7 +26,7 @@ const schema = {
 function handler(req, res) {
 
    const query = `
-      SELECT id, password
+      SELECT id, username, password
       FROM users
       WHERE username = '${req.body.username}'
    `;
@@ -45,7 +45,9 @@ function handler(req, res) {
          return res.status(400).end('Wrong username or password');
       }
 
-      const token = encodeJWT(result.rows[0].id);
+      delete result.rows[0].password;
+      const user = result.rows[0];
+      const token = encodeJWT(user);
 
 		res.end(token);
 

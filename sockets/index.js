@@ -1,13 +1,13 @@
 'use strict';
 
-const socketioJwt = require('../services/jwt');
+const authorize = require('../services/jwt').authorize;
 const redis = require('../services/redis');
 const config = require('../config');
 
 module.exports = function (io) {
 
    // socket jwt middleware
-   io.on('connection', socketioJwt.authorize({
+   io.on('connection', authorize({
    	secret: config.jwt.verifyKey,
       algorithms: [config.jwt.algo],
       decodedPropertyName: 'decodedToken',

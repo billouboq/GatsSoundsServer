@@ -40,7 +40,11 @@ function handler(req, res) {
 		return res.status(400).end('Invalid password');
 	}
 
-	const query = 'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id';
+	const query = `
+      INSERT INTO users (username, password)
+      VALUES ($1, $2)
+      RETURNING id, username
+   `;
 
 	const values = [
 		req.body.username,
@@ -53,7 +57,7 @@ function handler(req, res) {
          return res.status(400).end('An error occured');
       }
 
-      const token = encodeJWT(result.rows[0].id);
+      const token = encodeJWT(result.rows[0]);
 
       res.end(token);
 
