@@ -1,6 +1,6 @@
 'use strict';
 
-const socketioJwt = require('socketio-jwt');
+const socketioJwt = require('../services/jwt');
 const redis = require('../services/redis');
 const config = require('../config');
 
