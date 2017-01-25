@@ -20,12 +20,10 @@ module.exports = function (io) {
 		console.log('connected & authenticated: ' + JSON.stringify(socket.decodedToken));
 
       listenTo('test', function(io, socket, data) {
-         console.log(data);
          console.log('test');
       });
 
       listenTo('an other test', (io, socket, data) => {
-         console.log(data);
          console.log('an other test');
       });
 

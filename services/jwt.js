@@ -22,7 +22,14 @@ function authorize(options, onConnection) {
 
 	return function (socket) {
 
-		const auth_timeout = setTimeout(() => {
+      const server = this.server || socket.server;
+      const Namespace = Object.getPrototypeOf(server.sockets).constructor;
+
+      if (!~Namespace.events.indexOf('authenticated')) {
+         Namespace.events.push('authenticated');
+      }
+
+      const auth_timeout = setTimeout(() => {
 			socket.disconnect('unauthorized');
 		}, options.timeout || 5000);
 
@@ -30,7 +37,7 @@ function authorize(options, onConnection) {
 
          clearTimeout(auth_timeout);
 
-         if (!data || typeof data.token !== "string") {
+         if (!data || typeof data.token !== 'string') {
             return onError('invalid token datatype');
          }
 
@@ -44,6 +51,11 @@ function authorize(options, onConnection) {
 
             socket[options.decodedPropertyName] = decoded;
             socket.emit('authenticated', decoded);
+
+            var namespace = (server.nsps && socket.nsp && server.nsps[socket.nsp.name]) || server.sockets;
+
+            // explicit namespace
+            namespace.emit('authenticated', socket);
          }
 
          function onError(error) {
