@@ -1,11 +1,17 @@
 'use strict';
 
-const schemaValidator = require('../config/middlewares').schemaValidator;
+const express = require('express');
+const router = express.Router();
 
-const signup = require('./signup');
-const signin = require('./signin');
+// middlwares
+const schemaValidator = require('../middlewares/schemaValidator');
+const jwtValidator = require('../middlewares/jwtValidator');
 
-module.exports = function (app) {
-	app.post('/signup', schemaValidator(signup.schema), signup.handler);
-	app.post('/signin', schemaValidator(signin.schema), signin.handler);
-}
+// login routes (signin / signup)
+router.use('/login', require('./login'));
+// api global middlewares
+router.all('/api/*', jwtValidator);
+// all api routes
+router.use('/api/favorites', require('./api/favorites'));
+
+module.exports = router;

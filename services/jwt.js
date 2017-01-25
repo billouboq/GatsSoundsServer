@@ -5,10 +5,15 @@ const config = require('../config');
 
 module.exports = {
 	encode,
+   decode,
 	authorize
 }
 
 function encode(data) {
+	return jwt.sign(data, config.jwt.secret, {algorithm: config.jwt.algo});
+}
+
+function decode(data) {
 	return jwt.sign(data, config.jwt.secret, {algorithm: config.jwt.algo});
 }
 

@@ -7,9 +7,14 @@ CREATE DATABASE gatssounds;
 
 -- Create tables
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR(50) UNIQUE,
-  password VARCHAR
+   id SERIAL PRIMARY KEY,
+   username VARCHAR(50) UNIQUE,
+   password VARCHAR
+);
+
+CREATE TABLE favorites (
+   userid SERIAL,
+   video JSONB,
 );
 
 -- Create user

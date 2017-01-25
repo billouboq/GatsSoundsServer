@@ -7,9 +7,9 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const config = require('./config');
-const middlewares = require('./config/middlewares');
+const setGlobalMiddlewares = require('./config/middlewares');
 const socketController = require('./sockets');
-const routeController = require('./routes');
+const routes = require('./routes');
 
 // use uws instead of ws
 io.engine.ws = new (require('uws').Server)({
@@ -18,10 +18,10 @@ io.engine.ws = new (require('uws').Server)({
 });
 
 // set global middlewares
-middlewares.setGlobal(app);
+setGlobalMiddlewares(app);
 
 // route controller
-routeController(app);
+app.use(routes);
 
 // socket controller
 socketController(io);

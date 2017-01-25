@@ -1,8 +1,6 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
-const db = require('../services/database');
-const encodeJWT = require('../services/jwt').encode;
+const db = require('../../../services/database');
 
 const schema = {
 	username: {
