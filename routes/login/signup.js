@@ -14,10 +14,7 @@ const schema = {
       in: 'body',
 		notEmpty: true,
 		isLength: {
-			options: [{
-				min: 6,
-				max: undefined
-			}],
+			options: [{min: 6, max: undefined}],
 		},
 		errorMessage: 'Invalid password'
 	},
@@ -25,10 +22,7 @@ const schema = {
       in: 'body',
 		notEmpty: true,
 		isLength: {
-			options: [{
-				min: 6,
-				max: undefined
-			}],
+			options: [{min: 6, max: undefined}],
 		},
 		errorMessage: 'Invalid password'
 	},

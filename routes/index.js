@@ -9,9 +9,9 @@ const jwtValidator = require('../middlewares/jwtValidator');
 
 // login routes (signin / signup)
 router.use('/login', require('./login'));
-// api global middlewares
-router.all('/api/*', jwtValidator);
+
 // all api routes
+router.all('/api/*', jwtValidator);
 router.use('/api/favorites', require('./api/favorites'));
 
 module.exports = router;
