@@ -1,53 +1,45 @@
 'use strict';
 
+const Joi = require('joi');
 const db = require('../../../services/database');
 
 const schema = {
-	username: {
-      in: 'body',
-		notEmpty: true,
-		errorMessage: 'Invalid username'
-	},
-	password: {
-      in: 'body',
-		notEmpty: true,
-		isLength: {
-			options: [{
-				min: 6,
-				max: undefined
-			}],
+   body: {
+      id: Joi.string().required(),
+		title: Joi.string().required(),
+		description: Joi.string().required(),
+		date: Joi.string().required(),
+		duration: Joi.number().required(),
+		author: {
+			name: Joi.string().required(),
+			picture: Joi.string().required()
 		},
-		errorMessage: 'Invalid password'
-	},
+		thumbnail: {
+			small: Joi.string().required(),
+			medium: Joi.string().required(),
+			large: Joi.string().required()
+		}
+   }
 };
 
 function handler(req, res) {
 
+   console.log(req.body);
+
    const query = `
-      SELECT id, username, password
-      FROM users
-      WHERE username = '${req.body.username}'
+      INSERT INTO favorites
+      VALUES ($1, $2)
    `;
 
-	db.query(query, (err, result) => {
+   const values = [
+		req.decodedUser.id,
+		req.body,
+	];
 
-		if (err) {
-			return res.status(400).end('An error occured');
-		}
+	db.query(query, values, (err, result) => {
 
-      if (!result.rowCount) {
-         return res.status(400).end('Wrong username or password');
-      }
-
-      if (!bcrypt.compareSync(req.body.password, result.rows[0].password)) {
-         return res.status(400).end('Wrong username or password');
-      }
-
-      delete result.rows[0].password;
-      const user = result.rows[0];
-      const token = encodeJWT(user);
-
-		res.end(token);
+		console.log(err);
+      console.log(result);
 
 	});
 

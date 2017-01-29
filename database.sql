@@ -13,9 +13,12 @@ CREATE TABLE users (
 );
 
 CREATE TABLE favorites (
-   userid SERIAL,
-   video JSONB,
+   userid SERIAL REFERENCES users (id),
+   video JSONB
 );
+
+-- Create index on jsonb data
+CREATE UNIQUE INDEX videoid ON favorites ((video->'id'));
 
 -- Create user
 DROP USER IF EXISTS bill;
@@ -23,6 +26,7 @@ CREATE USER bill WITH ENCRYPTED PASSWORD 'gatsbill' CREATEDB;
 
 -- Give the user rights on created tables
 GRANT ALL PRIVILEGES ON users TO bill;
+GRANT ALL PRIVILEGES ON favorites TO bill;
 GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO bill;
 
 -- Test Table real quick

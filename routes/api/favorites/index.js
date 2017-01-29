@@ -12,7 +12,7 @@ const remove = require('./remove');
 const save = require('./save');
 
 // set routes
-router.get('/', schemaValidator(get.schema), get.handler);
+router.get('/', get.handler);
 router.post('/', schemaValidator(save.schema), save.handler);
 router.delete('/{id}', schemaValidator(remove.schema), remove.handler);
 

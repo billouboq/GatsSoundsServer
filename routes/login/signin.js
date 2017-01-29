@@ -1,26 +1,15 @@
 'use strict';
 
+const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const db = require('../../services/database');
 const encodeJWT = require('../../services/jwt').encode;
 
 const schema = {
-	username: {
-      in: 'body',
-		notEmpty: true,
-		errorMessage: 'Invalid username'
-	},
-	password: {
-      in: 'body',
-		notEmpty: true,
-		isLength: {
-			options: [{
-				min: 6,
-				max: undefined
-			}],
-		},
-		errorMessage: 'Invalid password'
-	},
+   body: {
+      username: Joi.string().min(3).required(),
+      password: Joi.string().min(6).required()
+   }
 };
 
 function handler(req, res) {

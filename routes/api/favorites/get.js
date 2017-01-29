@@ -2,58 +2,38 @@
 
 const db = require('../../../services/database');
 
-const schema = {
-	username: {
-      in: 'body',
-		notEmpty: true,
-		errorMessage: 'Invalid username'
-	},
-	password: {
-      in: 'body',
-		notEmpty: true,
-		isLength: {
-			options: [{
-				min: 6,
-				max: undefined
-			}],
-		},
-		errorMessage: 'Invalid password'
-	},
-};
-
 function handler(req, res) {
 
+   console.log('in get favorites');
+
    const query = `
-      SELECT id, username, password
-      FROM users
-      WHERE username = '${req.body.username}'
+      SELECT video
+      FROM favorites
+      WHERE userid = ${req.decodedUser.id}
    `;
 
 	db.query(query, (err, result) => {
 
-		if (err) {
+      console.log(err);
+      console.log(result);
+
+      result.rows.forEach(video => {
+         console.log(video);
+      })
+		/*if (err) {
 			return res.status(400).end('An error occured');
 		}
-
-      if (!result.rowCount) {
-         return res.status(400).end('Wrong username or password');
-      }
-
-      if (!bcrypt.compareSync(req.body.password, result.rows[0].password)) {
-         return res.status(400).end('Wrong username or password');
-      }
 
       delete result.rows[0].password;
       const user = result.rows[0];
       const token = encodeJWT(user);
 
-		res.end(token);
+		res.end(token);*/
 
 	});
 
 }
 
 module.exports = {
-	schema,
 	handler
 };

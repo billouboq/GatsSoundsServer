@@ -13,8 +13,8 @@ function encode(data) {
 	return jwt.sign(data, config.jwt.secret, {algorithm: config.jwt.algo});
 }
 
-function decode(data) {
-	return jwt.sign(data, config.jwt.secret, {algorithm: config.jwt.algo});
+function decode(data, callback) {
+	return jwt.verify(data, config.jwt.verifyKey, {algorithms: [config.jwt.algo]}, callback);
 }
 
 function authorize(options, onConnection) {
@@ -67,7 +67,6 @@ function authorize(options, onConnection) {
             socket.emit('unauthorized', error, function () {
                socket.disconnect('unauthorized');
             });
-            return;
          }
 
       });
