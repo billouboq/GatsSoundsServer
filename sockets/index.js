@@ -22,17 +22,6 @@ module.exports = function (io) {
       listenTo('addToPlaylist', function({io, socket, data}) {
          console.log('addToPlaylist');
          io.emit('sendVideo', data);
-
-         // add video
-         /*redis.push('playlist', data).then(() => {
-            console.log('video Added');
-         }).catch(() => {
-            // do nothing for now
-            socket.emit('error', {
-               status: '',
-               message: 'an error occured'
-            });
-         });*/
       });
 
       function listenTo(key, callback) {

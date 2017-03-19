@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 
 // middlwares
-const schemaValidator = require('../middlewares/schemaValidator');
 const jwtValidator = require('../middlewares/jwtValidator');
 
 // login routes (signin / signup)

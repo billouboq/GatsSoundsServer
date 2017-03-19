@@ -4,31 +4,30 @@ const db = require('../../../services/database');
 
 function handler(req, res) {
 
-   console.log('in get favorites');
-
    const query = `
       SELECT video
       FROM favorites
-      WHERE userid = ${req.decodedUser.id}
+      WHERE userid = $1
    `;
 
-	db.query(query, (err, result) => {
+   const values = [
+      req.user.id
+   ];
 
-      console.log(err);
-      console.log(result);
+	db.query(query, values, (err, result) => {
 
-      result.rows.forEach(video => {
-         console.log(video);
-      })
-		/*if (err) {
+      if (err) {
 			return res.status(400).end('An error occured');
 		}
 
-      delete result.rows[0].password;
-      const user = result.rows[0];
-      const token = encodeJWT(user);
+      // {video: data} to data
+      const flattenedArray = [];
 
-		res.end(token);*/
+      for (let i = 0; i < result.rows.length; i++) {
+         flattenedArray.push(result.rows[i].video);
+      }
+
+		res.json(flattenedArray);
 
 	});
 

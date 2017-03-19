@@ -17,10 +17,14 @@ function handler(req, res) {
    const query = `
       SELECT id, username, password
       FROM users
-      WHERE username = '${req.body.username}'
+      WHERE username = $1
    `;
 
-	db.query(query, (err, result) => {
+   const values = [
+      req.body.username
+   ]
+
+	db.query(query, values, (err, result) => {
 
 		if (err) {
 			return res.status(400).end('An error occured');

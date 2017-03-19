@@ -14,6 +14,6 @@ const save = require('./save');
 // set routes
 router.get('/', get.handler);
 router.post('/', schemaValidator(save.schema), save.handler);
-router.delete('/{id}', schemaValidator(remove.schema), remove.handler);
+router.delete('/:id', schemaValidator(remove.schema), remove.handler);
 
 module.exports = router;

@@ -24,22 +24,23 @@ const schema = {
 
 function handler(req, res) {
 
-   console.log(req.body);
-
    const query = `
       INSERT INTO favorites
       VALUES ($1, $2)
    `;
 
    const values = [
-		req.decodedUser.id,
+		req.user.id,
 		req.body,
 	];
 
 	db.query(query, values, (err, result) => {
 
-		console.log(err);
-      console.log(result);
+      if (err) {
+			return res.status(400).end('An error occured');
+		}
+
+      res.end();
 
 	});
 

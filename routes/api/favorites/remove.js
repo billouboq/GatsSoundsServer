@@ -4,7 +4,7 @@ const Joi = require('joi');
 const db = require('../../../services/database');
 
 const schema = {
-   query: {
+   params: {
       id: Joi.string().required()
    }
 };
@@ -13,13 +13,20 @@ function handler(req, res) {
 
    const query = `
       DELETE FROM favorites
-      WHERE video @> '{"id": "${req.query.id}"}'
+      WHERE video @> '{"id": "$1"}'
    `;
 
-	db.query(query, (err, result) => {
+   const values = [
+      req.params.id
+   ];
 
-		console.log(err);
-      console.log(result);
+	db.query(query, values, (err, result) => {
+
+      if (err || !result.rowCount) {
+         return res.status(400).end('An error occured');
+      }
+
+      res.end();
 
 	});
 
