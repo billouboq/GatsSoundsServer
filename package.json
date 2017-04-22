@@ -3,24 +3,13 @@
   "version": "0.2.0",
   "description": "Server of GatsSounds App",
   "scripts": {
-    "start:prod": "export NODE_ENV=production && node server.js",
-    "create:public-key": "openssl rsa -in ./certificates/key.pem -pubout -outform PEM -out ./certificates/publickey"
+    "start": "node server.js"
   },
   "author": "GatsBill",
   "dependencies": {
-    "bcrypt": "1.0.2",
-    "compression": "1.6.2",
-    "body-parser": "1.17.1",
-    "cors": "2.8.1",
-    "express": "5.0.0-alpha.5",
-    "joi": "10.2.2",
-    "jsonwebtoken": "7.3.0",
-    "pg": "6.1.4",
+    "bluebird": "3.5.0",
     "redis": "2.7.1",
     "socket.io": "1.7.3",
-    "uws": "0.13.0"
-  },
-  "devDependencies": {
-    "morgan": "^1.7.0"
+    "uws": "0.14.1"
   }
 }
