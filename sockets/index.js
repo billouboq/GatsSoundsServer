@@ -4,11 +4,20 @@ module.exports = function (io) {
 
    io.on('connection', (socket) => {
 
-      console.log('connected');
+      listenTo('sendVideo', ({io, socket, data}) => {
+         io.emit('addToPlaylist', data);
+      });
 
-      listenTo('addToPlaylist', ({io, socket, data}) => {
-         console.log('addToPlaylist');
-         io.emit('sendVideo', data);
+      listenTo('nextVideo', ({io, socket}) => {
+         io.emit('nextVideo');
+      });
+
+      listenTo('unpauseVideo', ({io, socket}) => {
+         io.emit('unpauseVideo');
+      });
+
+      listenTo('pauseVideo', ({io, socket}) => {
+         io.emit('pauseVideo');
       });
 
       function listenTo(key, callback) {
